@@ -3,215 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sakthisure - தமிழ் நாவல்கள்</title>
+<title>Sakthisure | தமிழ் நாவல்கள்</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#10101c;
- color:#fff;
-}
-header{
- background:#19192a;
- padding:18px 15px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- border-bottom:1px solid #393044;
-}
-.logo{
- color:#f3c76a;
- font-size:25px;
- font-weight:bold;
-}
-.logo span{color:#fff}
-.menu{color:#f3c76a;font-size:14px}
-.hero{
- padding:48px 20px;
- text-align:center;
- background:linear-gradient(140deg,#28203d,#10101c 75%);
-}
-.hero h1{
- color:#f3c76a;
- font-size:32px;
- margin:5px 0 12px;
-}
-.hero p{color:#ddd;line-height:1.8}
-.hero button,.story button{
- background:#d9ad58;
- color:#171321;
- border:0;
- padding:11px 22px;
- border-radius:22px;
- font-weight:bold;
- margin-top:12px;
-}
+body{margin:0;background:#100f1b;color:#fff;font-family:Arial,sans-serif}
+header{padding:18px;background:#1b1929;border-bottom:1px solid #66502f;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:26px;font-weight:bold;color:#e9bd70}
+.logo span{color:white}
+.menu{color:#e9bd70;font-size:14px}
+.hero{text-align:center;padding:55px 18px;background:linear-gradient(140deg,#392342,#171526,#100f1b)}
+.hero h1{font-size:34px;color:#f0c879;margin:0 0 12px}
+.hero p{line-height:1.9;color:#eee}
+button{background:#e4b967;color:#21182a;border:0;padding:12px 22px;border-radius:25px;font-weight:bold;cursor:pointer}
 .search{padding:20px}
-.search input{
- width:100%;
- padding:14px;
- border-radius:25px;
- border:1px solid #555;
- background:#222235;
- color:white;
- font-size:15px;
-}
-section{padding:12px 18px 25px}
-h2{color:#f3c76a;font-size:21px}
-.categories{
- display:flex;
- gap:10px;
- flex-wrap:wrap;
-}
-.categories span{
- background:#29263a;
- border:1px solid #55435e;
- padding:9px 14px;
- border-radius:20px;
- color:#f3d69b;
- font-size:13px;
-}
-.stories{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:14px;
-}
-.story{
- background:#202033;
- border:1px solid #393448;
- border-radius:13px;
- overflow:hidden;
- padding-bottom:14px;
-}
-.cover{
- height:125px;
- background:linear-gradient(135deg,#51354d,#25253d);
- display:flex;
- justify-content:center;
- align-items:center;
- font-size:42px;
-}
-.story h3{font-size:16px;margin:12px 10px 6px}
-.story p{font-size:13px;color:#bbb;margin:5px 10px}
-.story button{margin:8px 10px 0;padding:9px 13px}
-.vip{
- margin:10px 18px 30px;
- padding:24px 15px;
- text-align:center;
- border:1px solid #bd9650;
- border-radius:15px;
- background:#292137;
-}
+.search input{width:100%;padding:14px;border-radius:25px;border:1px solid #66516a;background:#242235;color:white;font-size:15px}
+section{padding:15px 18px 25px}
+h2{color:#eac477;font-size:21px}
+.categories{display:flex;gap:9px;flex-wrap:wrap}
+.categories span{background:#29243a;border:1px solid #57435e;border-radius:22px;padding:9px 13px;color:#f2d6a1;font-size:13px}
+.stories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.story{background:#211f32;border:1px solid #45364f;border-radius:14px;overflow:hidden;padding-bottom:15px}
+.cover{height:125px;background:linear-gradient(135deg,#69405d,#292440);display:flex;align-items:center;justify-content:center;font-size:42px}
+.story h3{font-size:15px;margin:12px 10px 7px;color:#fff}
+.story p{font-size:13px;color:#c9c3d0;margin:6px 10px}
+.story button{margin:9px 10px 0;padding:9px 15px}
+.vip{margin:12px 18px 28px;padding:24px 15px;text-align:center;border:1px solid #bd9650;border-radius:15px;background:#292137}
 .vip h2{margin-top:0}
-footer{
- background:#19192a;
- text-align:center;
- padding:22px 10px;
- color:#aaa;
- font-size:13px;
- line-height:2;
-}
-footer strong{color:#f3c76a}
-@media(min-width:650px){
- .stories{grid-template-columns:repeat(3,minmax(0,1fr))}
- .hero h1{font-size:42px}
-}
+.vip p{color:#e3d9e8;line-height:1.8}
+footer{text-align:center;padding:25px 10px;background:#1b1929;color:#aaa;font-size:13px;line-height:2}
+footer strong{color:#eac477}
+@media(min-width:650px){.stories{grid-template-columns:repeat(3,minmax(0,1fr))}.hero h1{font-size:42px}}
 </style>
 </head>
 <body>
-
 <header>
- <div class="logo">Sakthi<span>sure</span></div>
- <div class="menu">தமிழ் நாவல்கள்</div>
+<div class="logo">Sakthi<span>sure</span></div>
+<div class="menu">தமிழ் நாவல்கள்</div>
 </header>
 
 <div class="hero">
- <h1>சக்திசுரே</h1>
- <p>உங்கள் மனதைத் தொடும் காதல் கதைகள்...<br>
- உணர்வுகளுடன் பயணிக்கும் தமிழ் நாவல்கள்!</p>
- <button onclick="document.getElementById('novels').scrollIntoView({behavior:'smooth'})">
- கதைகளைப் படிக்க
- </button>
+<h1>சக்திசுரே</h1>
+<p>பெண்மையைப் போற்றுவோம்...<br>
+உங்கள் மனதைத் தொடும் காதல் கதைகள்!<br>
+உணர்வுகளுடன் பயணிக்கும் தமிழ் நாவல்கள்.</p>
+<button onclick="document.getElementById('novels').scrollIntoView({behavior:'smooth'})">நாவல்களைப் படிக்க</button>
 </div>
 
 <div class="search">
- <input id="searchBox" type="text"
- placeholder="கதையின் பெயரைத் தேடுங்கள்..."
- oninput="searchStories()">
+<input id="searchBox" placeholder="நாவலின் பெயரைத் தேடுங்கள்..." oninput="searchStories()">
 </div>
 
 <section>
- <h2>கதை வகைகள்</h2>
- <div class="categories">
-  <span>❤️ காதல்</span>
-  <span>💞 குடும்பம்</span>
-  <span>🔥 ரொமான்ஸ்</span>
-  <span>🌸 உணர்வுகள்</span>
-  <span>✨ முழு நாவல்கள்</span>
- </div>
+<h2>கதை வகைகள்</h2>
+<div class="categories">
+<span>❤️ காதல்</span>
+<span>💞 குடும்பம்</span>
+<span>🔥 ரொமான்ஸ்</span>
+<span>🌸 உணர்வுகள்</span>
+<span>📚 முழு நாவல்கள்</span>
+</div>
 </section>
 
 <section id="novels">
- <h2>📚 எங்கள் நாவல்கள்</h2>
- <div class="stories" id="storyList">
+<h2>📚 எங்கள் நாவல்கள்</h2>
+<div class="stories">
+<div class="story">
+<div class="cover">💕</div>
+<h3>என் உயிரின் அர்த்தம் நீ தானடி</h3>
+<p>காதல் • குடும்பம் • உணர்வுகள்</p>
+<p>அத்தியாயங்கள் விரைவில் சேர்க்கப்படும்</p>
+<button onclick="alert('இந்த நாவலின் அத்தியாயங்கள் விரைவில் சேர்க்கப்படும்!')">படிக்க</button>
+</div>
 
-  <div class="story">
-   <div class="cover">📖</div>
-   <h3>என் முதல் நாவல்</h3>
-   <p>தமிழ் காதல் நாவல்</p>
-   <p>இலவச வாசிப்பு</p>
-   <button onclick="alert('இந்தக் கதையின் அத்தியாயங்கள் விரைவில் சேர்க்கப்படும்!')">படிக்க</button>
-  </div>
+<div class="story">
+<div class="cover">❤️‍🔥</div>
+<h3>உயிரே ஒரு வார்த்தை சொல்லடா உனக்காக காத்திருப்பேன்</h3>
+<p>காதல் • உணர்வுகள்</p>
+<p>அத்தியாயங்கள் விரைவில் சேர்க்கப்படும்</p>
+<button onclick="alert('இந்த நாவலின் அத்தியாயங்கள் விரைவில் சேர்க்கப்படும்!')">படிக்க</button>
+</div>
 
-  <div class="story">
-   <div class="cover">💕</div>
-   <h3>இதயம் பேசும் கதை</h3>
-   <p>காதல் மற்றும் குடும்பம்</p>
-   <p>புதிய கதை</p>
-   <button onclick="alert('இந்தக் கதையின் அத்தியாயங்கள் விரைவில் சேர்க்கப்படும்!')">படிக்க</button>
-  </div>
-
-  <div class="story">
-   <div class="cover">🌹</div>
-   <h3>உணர்வுகளின் பயணம்</h3>
-   <p>முழு நாவல்</p>
-   <p>விரைவில்...</p>
-   <button onclick="alert('இந்தக் கதை விரைவில் வெளியாகும்!')">பார்க்க</button>
-  </div>
-
-  <div class="story">
-   <div class="cover">💫</div>
-   <h3>மனதில் ஒரு நினைவு</h3>
-   <p>காதல் கதை</p>
-   <p>விரைவில்...</p>
-   <button onclick="alert('இந்தக் கதை விரைவில் வெளியாகும்!')">பார்க்க</button>
-  </div>
-
- </div>
+<div class="story">
+<div class="cover">🔥</div>
+<h3>உயிர்த் தீயின் ஓசை</h3>
+<p>காதல் • மர்மம் • குடும்பம்</p>
+<p>தொடர்கதை</p>
+<button onclick="alert('இந்த நாவலின் அத்தியாயங்கள் விரைவில் சேர்க்கப்படும்!')">படிக்க</button>
+</div>
+</div>
 </section>
 
 <div class="vip">
- <h2>👑 Sakthisure VIP</h2>
- <p>பிரீமியம் நாவல்களைப் படிக்கும் வசதி விரைவில்!</p>
- <p>காயின் மற்றும் மாதச் சந்தா வசதிகள் பின்னர் சேர்க்கப்படும்.</p>
+<h2>👑 Sakthisure VIP</h2>
+<p>VIP உறுப்பினர்களுக்கான சிறப்புப் படிப்பு வசதி.</p>
+<p>காயின் மூலம் அத்தியாயங்களைத் திறக்கும் வசதி.</p>
+<p>உண்மையான உறுப்பினர் மற்றும் பணம் செலுத்தும் வசதி இன்னும் இணைக்கப்படவில்லை.</p>
 </div>
 
 <footer>
- <strong>Sakthisure</strong><br>
- தமிழ் நாவல்கள் • காதல் கதைகள் • உணர்வுகள்<br>
- © 2026 Sakthisure. All Rights Reserved.
+<strong>Sakthisure</strong><br>
+பெண்மையைப் போற்றுவோம் • தமிழ் நாவல்கள்<br>
+© 2026 Sakthisure. All Rights Reserved.
 </footer>
 
 <script>
 function searchStories(){
- const word=document.getElementById('searchBox').value.toLowerCase();
- document.querySelectorAll('.story').forEach(card=>{
-  card.style.display=card.innerText.toLowerCase().includes(word)
-  ? 'block':'none';
- });
+let word=document.getElementById('searchBox').value.toLowerCase();
+document.querySelectorAll('.story').forEach(card=>{
+card.style.display=card.innerText.toLowerCase().includes(word)?'block':'none';
+});
 }
 </script>
-
 </body>
-  </html>
+ </html>
+ 
