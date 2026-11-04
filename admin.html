@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sakthisure Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#100f1b;color:white;font-family:Arial,sans-serif}
+main{max-width:650px;margin:auto}
+h1{color:#f3b6d0;text-align:center}
+.card{background:#211e30;padding:18px;border-radius:14px;margin:16px 0}
+input,textarea,select,button{width:100%;padding:13px;margin:7px 0;border:0;border-radius:8px;font-size:16px}
+input,textarea,select{background:#fff;color:#222}
+textarea{min-height:150px}
+button{background:#d94d91;color:white;font-weight:bold}
+.note{color:#f5c5d9;font-size:14px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>🌸 Sakthisure Admin</h1>
+<p style="text-align:center">உங்கள் நாவல்களை நிர்வகிக்க</p>
+
+<section class="card" id="loginBox">
+<h2>Admin Login</h2>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<button onclick="signup()">புதிய கணக்கு உருவாக்கு</button>
+<p class="note" id="loginMessage"></p>
+</section>
+
+<section class="hidden" id="adminBox">
+<div class="card">
+<h2>புதிய நாவல் சேர்க்க</h2>
+<input id="novelTitle" placeholder="நாவல் பெயர்">
+<input id="novelCategory" placeholder="கதை வகை">
+<input id="novelEmoji" placeholder="Emoji (உதா: ❤️)" value="📚">
+<textarea id="novelDescription" placeholder="நாவல் அறிமுகம்"></textarea>
+<button onclick="addNovel()">நாவலைச் சேமி</button>
+</div>
+
+<div class="card">
+<h2>அத்தியாயம் சேர்க்க</h2>
+<select id="novelSelect">
+<option value="">நாவலைத் தேர்ந்தெடுக்கவும்</option>
+</select>
+<input id="chapterNumber" type="number" min="1" placeholder="அத்தியாய எண்">
+<input id="chapterTitle" placeholder="அத்தியாயத் தலைப்பு">
+<textarea id="chapterContent" placeholder="அத்தியாயத்தின் முழு உள்ளடக்கம்"></textarea>
+<label><input id="chapterPublished" type="checkbox" style="width:auto"> அத்தியாயத்தை வெளியிடு</label>
+<button onclick="addChapter()">அத்தியாயத்தைச் சேமி</button>
+</div>
+
+<div class="card">
+<h2>உங்கள் நாவல்கள்</h2>
+<div id="novelList">ஏற்றப்படுகிறது...</div>
+<button onclick="loadNovels()">மீண்டும் புதுப்பி</button>
+<button onclick="logout()">Logout</button>
+</div>
+<p class="note" id="adminMessage"></p>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://wuwjemfaaadqpprwqosx.supabase.co";
+const SUPABASE_KEY = "sb_publishable_VhC6ZD3rFKRcG_TxKvCa_Q_OJwfvznw";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const msg = (id, text) => {
+  document.getElementById(id).textContent = text;
+};
+
+async function signup(){
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  if(!email || password.length < 6){
+    msg("loginMessage","Email மற்றும் குறைந்தது 6 எழுத்து Password தேவை.");
+    return;
+  }
+  const {error} = await db.auth.signUp({email,password});
+  msg("loginMessage",error ? error.message :
+    "கணக்கு உருவாக்கப்பட்டது. Email உறுதிப்படுத்தல் தேவைப்படலாம். Admin அனுமதி தனியாக வழங்கப்பட வேண்டும்.");
+}
+
+async function login(){
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const {error} = await db.auth.signInWithPassword({email,password});
+  if(error){msg("loginMessage",error.message);return;}
+  await checkAdmin();
+}
+
+async function checkAdmin(){
+  const {data:{session}} = await db.auth.getSession();
+  if(!session){showLogin();return;}
+  const {data,isError} = await db.rpc("ss_is_admin");
+  if(isError || data !== true){
+    msg("loginMessage","இந்தக் கணக்கிற்கு Admin அனுமதி இன்னும் வழங்கப்படவில்லை.");
+    await db.auth.signOut();
+    showLogin();
+    return;
+  }
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("adminBox").classList.remove("hidden");
+  await loadNovels();
+}
+
+function showLogin(){
+  document.getElementById("loginBox").classList.remove("hidden");
+  document.getElementById("adminBox").classList.add("hidden");
+}
+
+async function addNovel(){
+  const title = document.getElementById("novelTitle").value.trim();
+  if(!title){msg("adminMessage","நாவல் பெயரை உள்ளிடவும்.");return;}
+  const {error} = await db.from("ss_novels").insert({
+    title,
+    category:document.getElementById("novelCategory").value,
+    cover_emoji:document.getElementById("novelEmoji").value || "📚",
+    description:document.getElementById("novelDescription").value,
+    is_published:true
+  });
+  if(error){msg("adminMessage",error.message);return;}
+  msg("adminMessage","நாவல் சேமிக்கப்பட்டது!");
+  document.getElementById("novelTitle").value="";
+  document.getElementById("novelCategory").value="";
+  document.getElementById("novelDescription").value="";
+  await loadNovels();
+}
+
+async function loadNovels(){
+  const {data,error} = await db.from("ss_novels")
+    .select("id,title,is_published")
+    .order("created_at",{ascending:true});
+  if(error){msg("adminMessage",error.message);return;}
+  const select = document.getElementById("novelSelect");
+  select.innerHTML='<option value="">நாவலைத் தேர்ந்தெடுக்கவும்</option>';
+  const list = document.getElementById("novelList");
+  list.innerHTML="";
+  (data || []).forEach(n=>{
+    const option=document.createElement("option");
+    option.value=n.id;
+    option.textContent=n.title;
+    select.appendChild(option);
+    const p=document.createElement("p");
+    p.textContent=(n.is_published ? "🟢 " : "⚪ ") + n.title;
+    list.appendChild(p);
+  });
+}
+
+async function addChapter(){
+  const novel_id=document.getElementById("novelSelect").value;
+  const chapter_number=Number(document.getElementById("chapterNumber").value);
+  const title=document.getElementById("chapterTitle").value.trim();
+  const content=document.getElementById("chapterContent").value.trim();
+  if(!novel_id || !chapter_number || !title || !content){
+    msg("adminMessage","நாவல், அத்தியாய எண், தலைப்பு, உள்ளடக்கம் அனைத்தையும் நிரப்பவும்.");
+    return;
+  }
+  const {error}=await db.from("ss_chapters").insert({
+    novel_id,chapter_number,title,content,
+    is_published:document.getElementById("chapterPublished").checked
+  });
+  if(error){msg("adminMessage",error.message);return;}
+  msg("adminMessage","அத்தியாயம் நிரந்தரமாகச் சேமிக்கப்பட்டது!");
+  document.getElementById("chapterNumber").value="";
+  document.getElementById("chapterTitle").value="";
+  document.getElementById("chapterContent").value="";
+}
+
+async function logout(){
+  await db.auth.signOut();
+  showLogin();
+}
+
+checkAdmin();
+</script>
+</body>
+  </html>
+  
