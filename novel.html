@@ -5,220 +5,123 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sakthisure | நாவல் வாசிப்பு</title>
-
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- background:#100f1b;
- color:white;
- font-family:Arial,sans-serif;
-}
-header{
- padding:18px;
- background:#1b1929;
- border-bottom:1px solid #66502f;
- display:flex;
- justify-content:space-between;
- align-items:center;
-}
-.logo{
- font-size:24px;
- font-weight:bold;
- color:#e9bd70;
-}
+body{margin:0;background:#100f1b;color:#fff;font-family:Arial,sans-serif}
+header{padding:18px;background:#1b1929;border-bottom:1px solid #66502f;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:bold;color:#e9bd70}
 .logo span{color:white}
-.back{
- color:#e9bd70;
- text-decoration:none;
- font-size:14px;
-}
-.container{
- max-width:850px;
- margin:auto;
- padding:18px;
-}
-h1{
- color:#f0c879;
- text-align:center;
- font-size:25px;
-}
-select{
- width:100%;
- padding:14px;
- border-radius:10px;
- background:#242235;
- color:white;
- border:1px solid #66516a;
- font-size:15px;
-}
-.book{
- margin-top:20px;
- padding:20px;
- background:#211f32;
- border:1px solid #57435e;
- border-radius:14px;
-}
-.book h2{
- color:#eac477;
- font-size:21px;
-}
-.book p{
- color:#d5cbdc;
- line-height:1.8;
-}
-.chapters{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:10px;
- margin-top:18px;
-}
-.chapter{
- background:#29243a;
- border:1px solid #57435e;
- border-radius:10px;
- padding:14px;
- color:#f2d6a1;
- text-align:center;
- cursor:pointer;
-}
-.chapter:hover{
- background:#49344f;
-}
-.reader{
- margin-top:22px;
- padding:20px;
- background:#211f32;
- border-radius:14px;
- border:1px solid #bd9650;
- min-height:180px;
-}
+.back{color:#e9bd70;text-decoration:none}
+.container{max-width:850px;margin:auto;padding:18px}
+h1{color:#f0c879;text-align:center}
+select{width:100%;padding:14px;border-radius:10px;background:#242235;color:white;border:1px solid #66516a;font-size:15px}
+.book{margin-top:20px;padding:20px;background:#211f32;border:1px solid #57435e;border-radius:14px}
+.book h2{color:#eac477}
+.book p{color:#d5cbdc;line-height:1.8}
+.chapters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.chapter{background:#29243a;border:1px solid #57435e;border-radius:10px;padding:14px;color:#f2d6a1;text-align:center;cursor:pointer}
+.chapter:hover{background:#49344f}
+.reader{margin-top:22px;padding:20px;background:#211f32;border-radius:14px;border:1px solid #bd9650;min-height:180px}
 .reader h2{color:#eac477}
-.reader p{
- color:#eee;
- line-height:2;
- white-space:pre-line;
-}
-button{
- background:#e4b967;
- color:#21182a;
- border:0;
- padding:12px 20px;
- border-radius:25px;
- font-weight:bold;
- cursor:pointer;
- margin-top:12px;
-}
-footer{
- text-align:center;
- padding:25px;
- color:#aaa;
- font-size:13px;
-}
-@media(max-width:400px){
- .chapters{grid-template-columns:1fr}
-}
+.reader p{color:#eee;line-height:2;white-space:pre-line}
+footer{text-align:center;padding:25px;color:#aaa;font-size:13px}
+@media(max-width:400px){.chapters{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
-
 <header>
- <div class="logo">Sakthi<span>sure</span></div>
- <a class="back" href="index.html">← முகப்பு</a>
+<div class="logo">Sakthi<span>sure</span></div>
+<a class="back" href="index.html">← முகப்பு</a>
 </header>
 
 <div class="container">
-
 <h1>📚 நாவல் வாசிப்பு</h1>
 
 <select id="novelSelect" onchange="changeNovel()">
- <option value="0">என் உயிரின் அர்த்தம் நீ தானடி</option>
- <option value="1">உயிரே ஒரு வார்த்தை சொல்லடா உனக்காக காத்திருப்பேன்</option>
- <option value="2">உயிர்த் தீயின் ஓசை</option>
+<option value="0">என் உயிரின் அர்த்தம் நீ தானடி</option>
+<option value="1">உயிரே ஒரு வார்த்தை சொல்லடா உனக்காக காத்திருப்பேன்</option>
+<option value="2">உயிர்த் தீயின் ஓசை</option>
 </select>
 
 <div class="book">
- <h2 id="novelTitle">என் உயிரின் அர்த்தம் நீ தானடி</h2>
- <p id="novelDescription">காதல் • குடும்பம் • உணர்வுகள்</p>
- <p>ஆசிரியர்: Sakthisure</p>
+<h2 id="novelTitle"></h2>
+<p id="novelDescription"></p>
+<p>ஆசிரியர்: Sakthisure</p>
 </div>
 
 <h2 style="color:#eac477">அத்தியாயங்கள்</h2>
-
 <div class="chapters" id="chapterList"></div>
 
 <div class="reader" id="reader">
- <h2>வாசிக்க ஓர் அத்தியாயத்தைத் தேர்வு செய்யுங்கள்</h2>
- <p>உங்கள் மனதைத் தொடும் கதைகள் இங்கே பயணிக்கும்...</p>
+<h2>ஓர் அத்தியாயத்தைத் தேர்வு செய்யுங்கள்</h2>
+<p>உங்கள் மனதைத் தொடும் கதைகள் இங்கே பயணிக்கும்.</p>
 </div>
-
 </div>
 
 <footer>
- <strong style="color:#eac477">Sakthisure</strong><br>
- பெண்மையைப் போற்றுவோம் • தமிழ் நாவல்கள்
+<strong style="color:#eac477">Sakthisure</strong><br>
+பெண்மையைப் போற்றுவோம் • தமிழ் நாவல்கள்<br>
+© 2026 Sakthisure. All Rights Reserved.
 </footer>
 
 <script>
-const novels=[
- {
-  title:"என் உயிரின் அர்த்தம் நீ தானடி",
-  description:"காதல் • குடும்பம் • உணர்வுகள்"
- },
- {
-  title:"உயிரே ஒரு வார்த்தை சொல்லடா உனக்காக காத்திருப்பேன்",
-  description:"காதல் • உணர்வுகள்"
- },
- {
-  title:"உயிர்த் தீயின் ஓசை",
-  description:"காதல் • மர்மம் • குடும்பம்"
- }
+const novels = [
+{
+title:"என் உயிரின் அர்த்தம் நீ தானடி",
+description:"காதல் • குடும்பம் • உணர்வுகள்"
+},
+{
+title:"உயிரே ஒரு வார்த்தை சொல்லடா உனக்காக காத்திருப்பேன்",
+description:"காதல் • உணர்வுகள்"
+},
+{
+title:"உயிர்த் தீயின் ஓசை",
+description:"காதல் • மர்மம் • குடும்பம்"
+}
 ];
 
-let currentNovel=0;
+const params = new URLSearchParams(window.location.search);
+let currentNovel = Number(params.get("book") || 0);
+
+if(!Number.isInteger(currentNovel) || currentNovel < 0 || currentNovel >= novels.length){
+currentNovel = 0;
+}
 
 function changeNovel(){
- currentNovel=Number(document.getElementById("novelSelect").value);
+currentNovel = Number(document.getElementById("novelSelect").value);
 
- document.getElementById("novelTitle").innerText=
- novels[currentNovel].title;
+document.getElementById("novelTitle").innerText = novels[currentNovel].title;
+document.getElementById("novelDescription").innerText = novels[currentNovel].description;
 
- document.getElementById("novelDescription").innerText=
- novels[currentNovel].description;
+showChapters();
 
- showChapters();
+document.getElementById("reader").innerHTML =
+"<h2>ஓர் அத்தியாயத்தைத் தேர்வு செய்யுங்கள்</h2><p>உங்கள் மனதைத் தொடும் கதைகள் இங்கே பயணிக்கும்.</p>";
 }
 
 function showChapters(){
- const list=document.getElementById("chapterList");
- list.innerHTML="";
+const list = document.getElementById("chapterList");
+list.innerHTML = "";
 
- for(let i=1;i<=30;i++){
-  const item=document.createElement("div");
-  item.className="chapter";
-  item.innerText="அத்தியாயம் "+i;
-  item.onclick=function(){
-   readChapter(i);
-  };
-  list.appendChild(item);
- }
+for(let i = 1; i <= 30; i++){
+const item = document.createElement("div");
+item.className = "chapter";
+item.innerText = "அத்தியாயம் " + i;
+item.onclick = function(){
+readChapter(i);
+};
+list.appendChild(item);
+}
 }
 
 function readChapter(number){
- document.getElementById("reader").innerHTML=`
- <h2>அத்தியாயம் ${number}</h2>
- <p>இந்த அத்தியாயத்தின் கதை இன்னும் பதிவேற்றப்படவில்லை.
-
-ஆசிரியர் Sakthisure அவர்களின் அத்தியாயங்கள் இங்கே இணைக்கப்படும்.
-
-விரைவில் முழுமையான வாசிப்பு வசதி கிடைக்கும்.</p>
- `;
+document.getElementById("reader").innerHTML =
+"<h2>அத்தியாயம் " + number + "</h2>" +
+"<p>இந்த அத்தியாயத்தின் கதை இன்னும் பதிவேற்றப்படவில்லை.\n\nஆசிரியர் Sakthisure அவர்களின் கதை விரைவில் இங்கே சேர்க்கப்படும்.</p>";
 }
 
+document.getElementById("novelSelect").value = currentNovel;
 changeNovel();
 </script>
-
 </body>
-  </html>
-  
+</html>
