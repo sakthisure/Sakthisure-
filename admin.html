@@ -8,158 +8,150 @@
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f5f5;color:#222;font-family:Arial,sans-serif}
-button{border:0;border-radius:8px;padding:11px 15px;background:#722b65;color:white;cursor:pointer}
-button:disabled{opacity:.5}
-.secondary{background:#eee;color:#222}
-.danger{background:#b3261e}
-.green{background:#167a48}
-header{background:#722b65;color:white;padding:16px;display:flex;justify-content:space-between;align-items:center}
-header h2{margin:0;font-size:20px}
-.wrap{max-width:1200px;margin:auto;padding:16px}
-.panel{background:white;padding:18px;border-radius:12px;margin-bottom:16px;box-shadow:0 2px 8px #0000000d}
-input,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:7px 0 14px;background:#fff;color:#222}
-textarea{min-height:90px}
-label{font-weight:bold;font-size:14px}
-.login{max-width:420px;margin:60px auto}
-.layout{display:grid;grid-template-columns:280px 1fr;gap:16px}
-.novel-item,.chapter-item{padding:12px;border:1px solid #eee;border-radius:8px;margin:8px 0;cursor:pointer}
-.novel-item.active,.chapter-item.active{border:2px solid #722b65;background:#fff8fd}
-.small{font-size:13px;color:#666}
-.actions,.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+body{margin:0;background:#f3f3f3;color:#222;font-family:Arial,"Noto Sans Tamil",sans-serif}
+header{background:white;padding:14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd}
+header h2{margin:0;color:#9b286b}
+button{border:0;border-radius:7px;padding:11px 14px;background:#9b286b;color:white;font-size:15px;cursor:pointer;margin:3px}
+.secondary{background:#555}.green{background:#18834b}.danger{background:#c62828}
+input,textarea{width:100%;padding:12px;margin:7px 0 13px;border:1px solid #ccc;border-radius:7px;font-size:16px;background:white;color:#222}
+label{font-weight:bold}
+.container{max-width:1100px;margin:auto;padding:14px}
+.panel{background:white;padding:17px;margin-bottom:14px;border-radius:10px;box-shadow:0 1px 5px #ddd}
 .hidden{display:none!important}
-#editor{min-height:480px;background:#fff;color:#111;border:1px solid #bbb;border-radius:8px;padding:20px;outline:none;line-height:1.9;font-size:18px;white-space:normal}
-#editor:empty:before{content:"இங்கே உங்கள் கதையை எழுதத் தொடங்குங்கள்...";color:#999}
-#editor img{max-width:100%;height:auto;display:block;margin:14px auto;border-radius:8px}
-.toolbar button{background:#eee;color:#222;padding:8px 12px}
-.status{font-size:13px;color:#167a48;min-height:20px}
-.cover-preview{max-width:130px;max-height:170px;object-fit:cover;border-radius:8px}
-@media(max-width:760px){.layout{grid-template-columns:1fr}#editor{min-height:380px;padding:14px;font-size:17px}}
+#loginBox{max-width:420px;margin:60px auto}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1}
+#novelList button{display:block;width:100%;text-align:left;background:#f7eaf1;color:#222;border:1px solid #e7cbd9;margin:7px 0}
+#novelList button.active{background:#9b286b;color:white}
+.toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px;background:#eee;border:1px solid #ddd;border-radius:8px 8px 0 0}
+.toolbar button{background:#555;padding:9px 11px}
+#editor{min-height:65vh;padding:22px;background:white;color:#111;border:1px solid #ccc;border-top:0;font-size:19px;line-height:2;outline:none;overflow-wrap:anywhere}
+#editor:empty:before{content:"இங்கே உங்கள் கதையை எழுதுங்கள்...";color:#999}
+#editor img{max-width:100%;height:auto;display:block;margin:15px auto}
+.editorInfo{padding:10px;background:#fafafa;border:1px solid #ddd;font-size:13px;display:flex;justify-content:space-between;gap:8px}
+.chapterItem{padding:11px;border:1px solid #ddd;border-radius:7px;margin:7px 0;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.small{font-size:13px;color:#666}
+#status{position:sticky;bottom:0;padding:11px;text-align:center;background:#fff8e8;border-top:1px solid #ddd}
+@media(max-width:600px){.container{padding:8px}.panel{padding:12px}#editor{min-height:70vh;padding:14px;font-size:18px}header h2{font-size:19px}}
 </style>
 </head>
 <body>
 
 <header>
-<h2>🌸 Sakthisure Admin</h2>
-<button id="logoutBtn" class="secondary hidden" onclick="logout()">வெளியேறு</button>
+ <h2>🌸 Sakthisure Admin</h2>
+ <button id="logoutBtn" class="secondary hidden" onclick="logout()">வெளியேறு</button>
 </header>
 
-<div id="loginBox" class="panel login">
-<h2>Admin Login</h2>
-<label>மின்னஞ்சல்</label>
-<input id="email" type="email" placeholder="Admin மின்னஞ்சல்">
-<label>கடவுச்சொல்</label>
-<input id="password" type="password" placeholder="கடவுச்சொல்">
-<button onclick="login()">உள்நுழைக</button>
-<p id="loginMessage" class="small"></p>
+<div id="loginBox" class="panel">
+ <h2>🌸 Admin Login</h2>
+ <label>மின்னஞ்சல்</label>
+ <input id="email" type="email" placeholder="Email">
+ <label>கடவுச்சொல்</label>
+ <input id="password" type="password" placeholder="Password">
+ <button onclick="login()" style="width:100%">உள்நுழைய</button>
+ <p id="loginMessage" class="small"></p>
 </div>
 
-<div id="dashboard" class="wrap hidden">
-<div class="panel">
-<h2>🌷 உங்கள் நாவல்கள்</h2>
-<button onclick="createNovel()">＋ புதிய நாவல் உருவாக்கு</button>
-<div id="novelList"></div>
+<div id="dashboard" class="container hidden">
+ <div class="panel">
+  <h3>📚 உங்கள் நாவல்கள்</h3>
+  <div id="novelList">ஏற்றப்படுகிறது...</div>
+  <button onclick="newNovel()">＋ புதிய நாவல்</button>
+ </div>
+
+ <div id="novelPanel" class="panel hidden">
+  <h3>நாவல் விவரங்கள்</h3>
+  <label>நாவல் பெயர்</label>
+  <input id="novelTitle" placeholder="நாவலின் பெயர்">
+  <label>நாவல் அறிமுகம்</label>
+  <textarea id="novelDescription" rows="4" placeholder="நாவல் அறிமுகம்"></textarea>
+  <label>அடையாள Emoji</label>
+  <input id="novelEmoji" value="📚">
+  <label>அட்டைப்படம்</label>
+  <input id="coverFile" type="file" accept="image/*">
+  <img id="coverPreview" style="display:none;max-width:150px;margin:10px 0">
+  <div class="row">
+   <button onclick="saveNovel()">சேமிக்க</button>
+   <button class="green" onclick="toggleNovelPublish()">வெளியிடு / Draft</button>
+   <button class="danger" onclick="deleteNovel()">நாவலை நீக்கு</button>
+  </div>
+  <p id="novelStatus" class="small"></p>
+ </div>
+
+ <div id="chapterPanel" class="panel hidden">
+  <h3>📖 அத்தியாயங்கள்</h3>
+  <div id="chapterList"></div>
+  <button onclick="newChapter()">＋ புதிய அத்தியாயம்</button>
+ </div>
+
+ <div id="writerPanel" class="panel hidden">
+  <h3>✍️ அத்தியாயம் எழுதுங்கள்</h3>
+  <label>அத்தியாய எண்</label>
+  <input id="chapterNumber" type="number" min="1" placeholder="1">
+  <label>அத்தியாய தலைப்பு</label>
+  <input id="chapterTitle" placeholder="அத்தியாயத்தின் பெயர்">
+
+  <div class="toolbar">
+   <button onclick="format('bold')"><b>B</b></button>
+   <button onclick="format('italic')"><i>I</i></button>
+   <button onclick="format('underline')"><u>U</u></button>
+   <button onclick="format('justifyLeft')">இடது</button>
+   <button onclick="format('justifyCenter')">நடு</button>
+   <button onclick="format('justifyRight')">வலது</button>
+   <button onclick="format('insertUnorderedList')">• பட்டியல்</button>
+   <button onclick="format('insertOrderedList')">1. பட்டியல்</button>
+   <button onclick="format('formatBlock','H2')">தலைப்பு</button>
+   <button onclick="format('removeFormat')">வடிவம் நீக்கு</button>
+   <button onclick="$('chapterImage').click()">🖼 படம்</button>
+   <button onclick="toggleFullscreen()">⛶ பெரிதாக்கு</button>
+  </div>
+
+  <input id="chapterImage" type="file" accept="image/*" class="hidden">
+  <div id="editor" contenteditable="true" spellcheck="true"></div>
+  <div class="editorInfo">
+   <span id="wordCount">0 எழுத்துகள்</span>
+   <span id="saveInfo">சேமிக்கப்படவில்லை</span>
+  </div>
+  <div class="row" style="margin-top:12px">
+   <button onclick="saveChapter()">💾 சேமிக்க</button>
+   <button class="green" onclick="toggleChapterPublish()">வெளியிடு / Draft</button>
+   <button class="danger" onclick="deleteChapter()">அத்தியாயத்தை நீக்கு</button>
+  </div>
+ </div>
 </div>
 
-<div id="workArea" class="hidden">
-<div class="panel">
-<h2>📚 நாவல் விவரங்கள்</h2>
-<label>நாவல் தலைப்பு</label>
-<input id="novelTitle">
-<label>நாவல் அறிமுகம்</label>
-<textarea id="novelDescription"></textarea>
-<label>அட்டைப்பட Emoji</label>
-<input id="novelEmoji" value="📚">
-<label>அட்டைப்படம் பதிவேற்றம்</label>
-<input id="coverFile" type="file" accept="image/*">
-<img id="coverPreview" class="cover-preview hidden" alt="அட்டைப்படம்">
-<div class="actions">
-<button onclick="saveNovel()">விவரங்களைச் சேமி</button>
-<button class="green" id="novelPublishBtn" onclick="toggleNovelPublish()">வெளியிடு</button>
-<button class="danger" onclick="deleteNovel()">நாவலை நீக்கு</button>
-</div>
-<p id="novelStatus" class="status"></p>
-</div>
-
-<div class="layout">
-<div class="panel">
-<h3>📖 அத்தியாயங்கள்</h3>
-<button onclick="createChapter()">＋ புதிய அத்தியாயம்</button>
-<div id="chapterList"></div>
-</div>
-
-<div class="panel">
-<div id="emptyEditor">
-<h3>எழுதத் தொடங்குங்கள்</h3>
-<p class="small">புதிய அத்தியாயத்தை உருவாக்கவும் அல்லது ஒன்றைத் தேர்ந்தெடுக்கவும்.</p>
-</div>
-
-<div id="chapterEditor" class="hidden">
-<label>அத்தியாயத் தலைப்பு</label>
-<input id="chapterTitle" placeholder="அத்தியாயத்தின் தலைப்பு">
-
-<div class="toolbar">
-<button onclick="formatText('bold')"><b>B</b></button>
-<button onclick="formatText('italic')"><i>I</i></button>
-<button onclick="formatText('underline')"><u>U</u></button>
-<button onclick="formatText('justifyLeft')">இடது</button>
-<button onclick="formatText('justifyCenter')">நடுவில்</button>
-<button onclick="formatText('insertUnorderedList')">பட்டியல்</button>
-<button onclick="formatText('formatBlock','h2')">தலைப்பு</button>
-<button onclick="document.getElementById('chapterImage').click()">🖼 படம் சேர்க்க</button>
-<input id="chapterImage" type="file" accept="image/*" class="hidden">
-</div>
-
-<div id="editor" contenteditable="true" spellcheck="true"></div>
-<p id="saveStatus" class="status">சேமிக்கத் தயார்</p>
-<div class="actions">
-<button onclick="saveChapterNow()">இப்போதே சேமி</button>
-<button class="green" onclick="publishChapter()">அத்தியாயத்தை வெளியிடு</button>
-<button class="secondary" onclick="unpublishChapter()">Draft ஆக மாற்று</button>
-<button class="danger" onclick="deleteChapter()">அத்தியாயத்தை நீக்கு</button>
-</div>
-<p class="small">நீங்கள் எழுதும் மாற்றங்கள் தானாக Draft ஆகச் சேமிக்கப்படும்.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div id="status">Sakthisure – முருகன் துணை 🌸</div>
 
 <script>
 const SUPABASE_URL="https://wuwjemfaaadqpprwqosx.supabase.co";
 const SUPABASE_KEY="sb_publishable_VhC6ZD3rFKRcG_TxKvCa_Q_OJwfvznw";
 const ADMIN_ID="6e72b8c3-77e7-4ab5-871b-233035211461";
-const IMAGE_BUCKET="ss-story-images";
+const COPYRIGHT="© All Rights Reserved. Unauthorized reproduction prohibited.";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
+let currentUser=null,currentNovel=null,currentChapter=null;
+let novelPublished=false,chapterPublished=false,coverURL="";
+let saveTimer=null,dirty=false,isSaving=false,saveAgain=false;
 const $=id=>document.getElementById(id);
-let currentUser=null,activeNovel=null,activeChapter=null;
-let saveTimer=null,saveRunning=false,chapterDirty=false;
-let saveAgain=false;
-
-function status(id,text){$(id).textContent=text}
+function message(t){$("status").textContent=t;}
 function cleanHTML(html){
- return DOMPurify.sanitize(html||"",{
-  USE_PROFILES:{html:true},
-  ADD_TAGS:["img"],
-  ADD_ATTR:["src","alt","width","height"]
- });
+ return DOMPurify.sanitize(html,{USE_PROFILES:{html:true}});
 }
 
 async function login(){
- status("loginMessage","உள்நுழைகிறது...");
- const {data,error}=await db.auth.signInWithPassword({
-  email:$("email").value.trim(),
-  password:$("password").value
- });
- if(error){status("loginMessage","பிழை: "+error.message);return}
+ const email=$("email").value.trim(),password=$("password").value;
+ if(!email||!password){$("loginMessage").textContent="மின்னஞ்சல் மற்றும் கடவுச்சொல் உள்ளிடுங்கள்.";return;}
+ $("loginMessage").textContent="உள்நுழைகிறது...";
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ if(error){$("loginMessage").textContent=error.message;return;}
  await checkAdmin(data.user);
 }
 
 async function checkAdmin(user){
- if(!user||user.id!==ADMIN_ID){
+ if(!user)return;
+ if(user.id!==ADMIN_ID){
   await db.auth.signOut();
-  status("loginMessage","இந்தக் கணக்கிற்கு Admin அனுமதி இல்லை.");
+  $("loginMessage").textContent="இந்தக் கணக்கிற்கு Admin அனுமதி இல்லை.";
   return;
  }
  currentUser=user;
@@ -170,317 +162,291 @@ async function checkAdmin(user){
 }
 
 async function logout(){
- if(activeChapter){
-  const ok=await flushChapterSave();
-  if(!ok){alert("சேமிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.");return}
- }
+ if(dirty)await saveChapterNow();
  await db.auth.signOut();
- currentUser=null;activeNovel=null;activeChapter=null;
+ currentUser=null;
  $("dashboard").classList.add("hidden");
- $("loginBox").classList.remove("hidden");
  $("logoutBtn").classList.add("hidden");
+ $("loginBox").classList.remove("hidden");
+ message("வெளியேறிவிட்டீர்கள்.");
 }
 
-db.auth.getSession().then(({data})=>{
- if(data.session) checkAdmin(data.session.user);
-});
-
 async function loadNovels(){
- const {data,error}=await db.from("ss_novels").select("*").order("updated_at",{ascending:false});
- if(error){alert("நாவல்களைப் பெற முடியவில்லை: "+error.message);return}
+ const {data,error}=await db.from("ss_novels").select("*").order("created_at",{ascending:false});
+ if(error){$("novelList").textContent="பிழை: "+error.message;return;}
  $("novelList").innerHTML="";
- if(!data.length){$("novelList").textContent="இன்னும் நாவல்கள் இல்லை.";return}
+ if(!data||!data.length){$("novelList").textContent="இன்னும் நாவல்கள் இல்லை.";return;}
  data.forEach(n=>{
-  const item=document.createElement("div");
-  item.className="novel-item"+(activeNovel?.id===n.id?" active":"");
-  const title=document.createElement("b");
-  title.textContent=(n.cover_emoji||"📚")+" "+n.title;
-  const state=document.createElement("div");
-  state.className="small";
-  state.textContent=n.is_published?"வெளியிடப்பட்டது":"Draft";
-  item.append(title,state);
-  item.onclick=()=>selectNovel(n.id);
-  $("novelList").append(item);
+  const b=document.createElement("button");
+  b.className=currentNovel===n.id?"active":"";
+  b.textContent=(n.cover_emoji||"📚")+" "+n.title+" "+(n.is_published?"(Published)":"(Draft)");
+  b.onclick=()=>selectNovel(n.id);
+  $("novelList").appendChild(b);
  });
 }
 
-async function createNovel(){
- const title=prompt("புதிய நாவலின் பெயர்:");
- if(!title?.trim())return;
- const {data,error}=await db.from("ss_novels").insert({
-  title:title.trim(),description:"",category:"காதல்",
-  cover_emoji:"📚",author_id:currentUser.id,
-  author_name:"Sakthisure",is_published:false
- }).select().single();
- if(error){alert("உருவாக்க முடியவில்லை: "+error.message);return}
- await loadNovels();
- await selectNovel(data.id);
+function newNovel(){
+ currentNovel=null;currentChapter=null;coverURL="";novelPublished=false;
+ $("novelTitle").value="";$("novelDescription").value="";
+ $("novelEmoji").value="📚";$("coverFile").value="";
+ $("coverPreview").style.display="none";
+ $("novelStatus").textContent="புதிய நாவல்";
+ $("novelPanel").classList.remove("hidden");
+ $("chapterPanel").classList.add("hidden");
+ $("writerPanel").classList.add("hidden");
 }
 
 async function selectNovel(id){
- if(activeChapter){
-  const ok=await flushChapterSave();
-  if(!ok){alert("முதலில் அத்தியாயத்தைச் சேமிக்கவும்.");return}
- }
+ if(dirty&&!await saveChapterNow())return;
  const {data,error}=await db.from("ss_novels").select("*").eq("id",id).single();
- if(error){alert(error.message);return}
- activeNovel=data;activeChapter=null;
- $("workArea").classList.remove("hidden");
+ if(error){message("நாவல் பிழை: "+error.message);return;}
+ currentNovel=id;currentChapter=null;
+ novelPublished=!!data.is_published;coverURL=data.cover_image_url||"";
  $("novelTitle").value=data.title||"";
  $("novelDescription").value=data.description||"";
  $("novelEmoji").value=data.cover_emoji||"📚";
- if(data.cover_image_url){
-  $("coverPreview").src=data.cover_image_url;
-  $("coverPreview").classList.remove("hidden");
- }else $("coverPreview").classList.add("hidden");
- $("novelPublishBtn").textContent=data.is_published?"வெளியீட்டை நிறுத்து":"வெளியிடு";
- $("chapterEditor").classList.add("hidden");
- $("emptyEditor").classList.remove("hidden");
- await loadChapters();
- await loadNovels();
-}
-
-async function saveNovel(){
- if(!activeNovel)return;
- const {data,error}=await db.from("ss_novels").update({
-  title:$("novelTitle").value.trim(),
-  description:$("novelDescription").value,
-  cover_emoji:$("novelEmoji").value.trim()||"📚",
-  updated_at:new Date().toISOString()
- }).eq("id",activeNovel.id).select().single();
- if(error){status("novelStatus","சேமிக்க முடியவில்லை: "+error.message);return}
- activeNovel=data;
- status("novelStatus","நாவல் விவரங்கள் சேமிக்கப்பட்டன ✓");
- await loadNovels();
+ $("novelStatus").textContent=novelPublished?"வெளியிடப்பட்டுள்ளது":"Draft";
+ if(coverURL){$("coverPreview").src=coverURL;$("coverPreview").style.display="block";}
+ else $("coverPreview").style.display="none";
+ $("novelPanel").classList.remove("hidden");
+ $("chapterPanel").classList.remove("hidden");
+ $("writerPanel").classList.add("hidden");
+ await loadChapters();await loadNovels();
 }
 
 async function uploadImage(file){
- if(!file)return null;
- if(!file.type.startsWith("image/"))throw new Error("படக் கோப்பை மட்டும் தேர்ந்தெடுக்கவும்.");
- if(file.size>5*1024*1024)throw new Error("படம் 5 MB-க்கு குறைவாக இருக்க வேண்டும்.");
- const ext=(file.name.split(".").pop()||"jpg").replace(/[^a-zA-Z0-9]/g,"");
+ if(!file||!file.type.startsWith("image/"))throw new Error("படத்தைத் தேர்ந்தெடுக்கவும்.");
+ if(file.size>5*1024*1024)throw new Error("படம் 5MB-க்கு குறைவாக இருக்க வேண்டும்.");
+ const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"");
  const path=currentUser.id+"/"+Date.now()+"-"+Math.random().toString(36).slice(2)+"."+ext;
- const {error}=await db.storage.from(IMAGE_BUCKET).upload(path,file,{upsert:false,contentType:file.type});
+ const {error}=await db.storage.from("ss-story-images").upload(path,file,{upsert:false,contentType:file.type});
  if(error)throw error;
- const {data}=db.storage.from(IMAGE_BUCKET).getPublicUrl(path);
- return data.publicUrl;
+ return db.storage.from("ss-story-images").getPublicUrl(path).data.publicUrl;
 }
 
-$("coverFile").addEventListener("change",async e=>{
- const file=e.target.files[0];
- if(!file||!activeNovel)return;
- status("novelStatus","அட்டைப்படம் பதிவேற்றப்படுகிறது...");
+$("coverFile").addEventListener("change",async function(){
+ if(!this.files[0])return;
  try{
-  const url=await uploadImage(file);
-  const {data,error}=await db.from("ss_novels")
-   .update({cover_image_url:url,updated_at:new Date().toISOString()})
-   .eq("id",activeNovel.id).select().single();
-  if(error)throw error;
-  activeNovel=data;
-  $("coverPreview").src=url;
-  $("coverPreview").classList.remove("hidden");
-  status("novelStatus","அட்டைப்படம் சேமிக்கப்பட்டது ✓");
- }catch(err){status("novelStatus","படப் பதிவேற்றப் பிழை: "+err.message)}
- e.target.value="";
+  message("அட்டைப்படம் பதிவேற்றப்படுகிறது...");
+  coverURL=await uploadImage(this.files[0]);
+  $("coverPreview").src=coverURL;$("coverPreview").style.display="block";
+  message("அட்டைப்படம் தயார்.");
+ }catch(e){message("படப் பிழை: "+e.message);}
 });
 
+async function saveNovel(){
+ const title=$("novelTitle").value.trim();
+ if(!title){message("நாவல் பெயரை உள்ளிடுங்கள்.");return false;}
+ const payload={
+  title,description:$("novelDescription").value,
+  cover_emoji:$("novelEmoji").value.trim()||"📚",
+  cover_image_url:coverURL||null,author_id:currentUser.id,
+  author_name:"Sakthisure",copyright_notice:COPYRIGHT,
+  updated_at:new Date().toISOString()
+ };
+ let result;
+ if(currentNovel){
+  result=await db.from("ss_novels").update(payload).eq("id",currentNovel);
+ }else{
+  result=await db.from("ss_novels").insert({...payload,is_published:false}).select().single();
+ }
+ if(result.error){message("நாவல் சேமிப்பு பிழை: "+result.error.message);return false;}
+ if(!currentNovel)currentNovel=result.data.id;
+ $("novelStatus").textContent="சேமிக்கப்பட்டது";
+ $("chapterPanel").classList.remove("hidden");
+ await loadNovels();await loadChapters();
+ message("நாவல் சேமிக்கப்பட்டது.");
+ return true;
+}
+
 async function toggleNovelPublish(){
- if(!activeNovel)return;
- const next=!activeNovel.is_published;
- const {data,error}=await db.from("ss_novels").update({
+ if(!currentNovel&&!await saveNovel())return;
+ const next=!novelPublished;
+ const {error}=await db.from("ss_novels").update({
   is_published:next,updated_at:new Date().toISOString()
- }).eq("id",activeNovel.id).select().single();
- if(error){alert(error.message);return}
- activeNovel=data;
- $("novelPublishBtn").textContent=next?"வெளியீட்டை நிறுத்து":"வெளியிடு";
- status("novelStatus",next?"நாவல் வெளியிடப்பட்டது ✓":"நாவல் Draft ஆக மாற்றப்பட்டது");
- await loadNovels();
+ }).eq("id",currentNovel);
+ if(error){message("வெளியீட்டு பிழை: "+error.message);return;}
+ novelPublished=next;
+ $("novelStatus").textContent=next?"வெளியிடப்பட்டுள்ளது":"Draft";
+ await loadNovels();message(next?"நாவல் வெளியிடப்பட்டது.":"Draft ஆக மாற்றப்பட்டது.");
 }
 
 async function deleteNovel(){
- if(!activeNovel||!confirm("இந்த நாவலையும் அதன் அத்தியாயங்களையும் நீக்க வேண்டுமா?"))return;
- if(activeChapter&&!await flushChapterSave()){alert("முதலில் சேமிக்கவும்.");return}
- const {error:e1}=await db.from("ss_chapters").delete().eq("novel_id",activeNovel.id);
- if(e1){alert("அத்தியாயங்களை நீக்க முடியவில்லை: "+e1.message);return}
- const {error:e2}=await db.from("ss_novels").delete().eq("id",activeNovel.id);
- if(e2){alert("நாவலை நீக்க முடியவில்லை: "+e2.message);return}
- activeNovel=null;activeChapter=null;
- $("workArea").classList.add("hidden");
- await loadNovels();
+ if(!currentNovel||!confirm("இந்த நாவலையும் அதன் அத்தியாயங்களையும் நீக்க வேண்டுமா?"))return;
+ const {error:ce}=await db.from("ss_chapters").delete().eq("novel_id",currentNovel);
+ if(ce){message("அத்தியாயங்களை நீக்க முடியவில்லை: "+ce.message);return;}
+ const {error}=await db.from("ss_novels").delete().eq("id",currentNovel);
+ if(error){message("நாவல் நீக்கப் பிழை: "+error.message);return;}
+ currentNovel=null;currentChapter=null;
+ $("novelPanel").classList.add("hidden");
+ $("chapterPanel").classList.add("hidden");
+ $("writerPanel").classList.add("hidden");
+ await loadNovels();message("நாவல் நீக்கப்பட்டது.");
 }
 
 async function loadChapters(){
- const {data,error}=await db.from("ss_chapters").select("*")
-  .eq("novel_id",activeNovel.id).order("chapter_number",{ascending:true});
- if(error){alert(error.message);return}
+ if(!currentNovel)return;
+ const {data,error}=await db.from("ss_chapters").select("*").eq("novel_id",currentNovel).order("chapter_number",{ascending:true});
+ if(error){$("chapterList").textContent="பிழை: "+error.message;return;}
  $("chapterList").innerHTML="";
- if(!data.length){$("chapterList").textContent="அத்தியாயங்கள் இல்லை.";return}
+ if(!data.length){$("chapterList").textContent="அத்தியாயங்கள் இன்னும் இல்லை.";return;}
  data.forEach(ch=>{
-  const item=document.createElement("div");
-  item.className="chapter-item"+(activeChapter?.id===ch.id?" active":"");
-  const title=document.createElement("b");
-  title.textContent=ch.chapter_number+". "+(ch.title||"தலைப்பிடப்படாத அத்தியாயம்");
-  const state=document.createElement("div");
-  state.className="small";
-  state.textContent=ch.is_published?"வெளியிடப்பட்டது":"Draft";
-  item.append(title,state);
-  item.onclick=()=>selectChapter(ch.id);
-  $("chapterList").append(item);
+  const div=document.createElement("div");div.className="chapterItem";
+  const name=document.createElement("span");
+  name.textContent="அத்தியாயம் "+ch.chapter_number+" – "+ch.title+(ch.is_published?" ✓":" (Draft)");
+  const btn=document.createElement("button");btn.textContent="திற";
+  btn.onclick=()=>openChapter(ch);
+  div.append(name,btn);$("chapterList").appendChild(div);
  });
 }
 
-async function createChapter(){
- if(!activeNovel)return;
- if(activeChapter&&!await flushChapterSave()){alert("முதலில் சேமிக்கவும்.");return}
- const {data:rows,error:readError}=await db.from("ss_chapters")
-  .select("chapter_number").eq("novel_id",activeNovel.id)
-  .order("chapter_number",{ascending:false}).limit(1);
- if(readError){alert(readError.message);return}
- const number=rows?.length?rows[0].chapter_number+1:1;
- const {data,error}=await db.from("ss_chapters").insert({
-  novel_id:activeNovel.id,chapter_number:number,
-  title:"அத்தியாயம் "+number,content:"",
-  author_id:currentUser.id,author_name:"Sakthisure",
-  is_published:false
- }).select().single();
- if(error){alert("அத்தியாயம் உருவாக்க முடியவில்லை: "+error.message);return}
- await loadChapters();
- await selectChapter(data.id);
+function newChapter(){
+ if(!currentNovel){message("முதலில் நாவலைச் சேமியுங்கள்.");return;}
+ currentChapter=null;chapterPublished=false;dirty=false;
+ $("chapterNumber").value="";$("chapterTitle").value="";
+ $("editor").innerHTML="";
+ $("saveInfo").textContent="புதிய அத்தியாயம்";
+ $("writerPanel").classList.remove("hidden");
+ $("chapterPanel").scrollIntoView({behavior:"smooth"});
+ updateCount();
 }
 
-async function selectChapter(id){
- if(activeChapter&&!await flushChapterSave()){alert("முதலில் சேமிக்கவும்.");return}
- const {data,error}=await db.from("ss_chapters").select("*").eq("id",id).single();
- if(error){alert(error.message);return}
- activeChapter=data;chapterDirty=false;
- $("emptyEditor").classList.add("hidden");
- $("chapterEditor").classList.remove("hidden");
- $("chapterTitle").value=data.title||"";
- $("editor").innerHTML=cleanHTML(data.content||"");
- status("saveStatus",data.is_published?"வெளியிடப்பட்ட அத்தியாயம்":"Draft திறக்கப்பட்டது");
- await loadChapters();
+async function openChapter(ch){
+ if(dirty&&!await saveChapterNow())return;
+ currentChapter=ch.id;chapterPublished=!!ch.is_published;dirty=false;
+ $("chapterNumber").value=ch.chapter_number;
+ $("chapterTitle").value=ch.title||"";
+ $("editor").innerHTML=cleanHTML(ch.content||"");
+ $("saveInfo").textContent="சேமிக்கப்பட்டது";
+ $("writerPanel").classList.remove("hidden");
+ updateCount();
+ $("writerPanel").scrollIntoView({behavior:"smooth"});
 }
 
-function markDirty(){
- if(!activeChapter)return;
- chapterDirty=true;
- status("saveStatus","மாற்றங்கள் உள்ளன — சேமிக்கப்படும்...");
- clearTimeout(saveTimer);
- saveTimer=setTimeout(()=>saveChapterNow(),1200);
-}
-
-$("chapterTitle").addEventListener("input",markDirty);
-$("editor").addEventListener("input",markDirty);
-
-function formatText(command,value=null){
+function format(command,value=null){
  $("editor").focus();
  document.execCommand(command,false,value);
  markDirty();
 }
 
+function markDirty(){
+ dirty=true;
+ $("saveInfo").textContent="சேமிக்கப்படவில்லை";
+ clearTimeout(saveTimer);
+ saveTimer=setTimeout(()=>saveChapterNow(),1800);
+}
+
+function updateCount(){
+ $("wordCount").textContent=$("editor").innerText.length+" எழுத்துகள்";
+}
+
+$("editor").addEventListener("input",()=>{updateCount();markDirty();});
+$("chapterTitle").addEventListener("input",markDirty);
+$("chapterNumber").addEventListener("input",markDirty);
+
 async function saveChapterNow(){
- if(!activeChapter||!chapterDirty)return true;
+ if(!currentNovel||!currentUser)return false;
+ if(!dirty&&currentChapter)return true;
+ if(isSaving){saveAgain=true;return false;}
+ isSaving=true;
  clearTimeout(saveTimer);
- if(saveRunning){saveAgain=true;return false}
- saveRunning=true;
- let success=true;
-
- do{
-  saveAgain=false;
-  const id=activeChapter.id;
-  const updates={
-   title:$("chapterTitle").value.trim(),
-   content:cleanHTML($("editor").innerHTML),
-   updated_at:new Date().toISOString()
-  };
-  chapterDirty=false;
-  status("saveStatus","சேமிக்கப்படுகிறது...");
-  const {data,error}=await db.from("ss_chapters").update(updates)
-   .eq("id",id).select().single();
-
-  if(error){
-   chapterDirty=true;
-   status("saveStatus","சேமிப்புப் பிழை: "+error.message);
-   success=false;
-   break;
+ try{
+  const number=parseInt($("chapterNumber").value,10);
+  const title=$("chapterTitle").value.trim();
+  if(!number||number<1||!title){
+   message("அத்தியாய எண் மற்றும் தலைப்பை உள்ளிடுங்கள்.");
+   return false;
   }
-  if(activeChapter?.id===id)activeChapter=data;
-  if(chapterDirty)saveAgain=true;
-  if(!chapterDirty)status("saveStatus","Draft சேமிக்கப்பட்டது ✓");
- }while(saveAgain);
-
- saveRunning=false;
- if(chapterDirty&&!saveTimer)saveTimer=setTimeout(()=>saveChapterNow(),500);
- await loadChapters();
- return success&&!chapterDirty;
-}
-
-async function flushChapterSave(){
- clearTimeout(saveTimer);
- if(!activeChapter)return true;
- if(saveRunning){
-  await new Promise(resolve=>{
-   const check=()=>{
-    if(!saveRunning)resolve();
-    else setTimeout(check,100);
-   };
-   check();
-  });
+  const content=cleanHTML($("editor").innerHTML);
+  const payload={
+   novel_id:currentNovel,chapter_number:number,title,content,
+   author_id:currentUser.id,author_name:"Sakthisure",
+   copyright_notice:COPYRIGHT,updated_at:new Date().toISOString()
+  };
+  let result;
+  if(currentChapter){
+   result=await db.from("ss_chapters").update(payload).eq("id",currentChapter);
+  }else{
+   result=await db.from("ss_chapters").insert({...payload,is_published:false}).select().single();
+   if(!result.error)currentChapter=result.data.id;
+  }
+  if(result.error)throw result.error;
+  dirty=false;$("saveInfo").textContent="சேமிக்கப்பட்டது";
+  message("அத்தியாயம் சேமிக்கப்பட்டது.");
+  await loadChapters();
+  return true;
+ }catch(e){
+  $("saveInfo").textContent="சேமிக்க முடியவில்லை";
+  message("சேமிப்பு பிழை: "+e.message);
+  return false;
+ }finally{
+  isSaving=false;
+  if(saveAgain){saveAgain=false;if(dirty)saveTimer=setTimeout(saveChapterNow,500);}
  }
- if(chapterDirty)return await saveChapterNow();
- return true;
 }
 
-async function publishChapter(){
- if(!activeChapter)return;
- if(!await flushChapterSave()){alert("சேமிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.");return}
- const {data,error}=await db.from("ss_chapters").update({
-  is_published:true,updated_at:new Date().toISOString()
- }).eq("id",activeChapter.id).select().single();
- if(error){alert("வெளியிட முடியவில்லை: "+error.message);return}
- activeChapter=data;
- status("saveStatus","அத்தியாயம் வெளியிடப்பட்டது ✓");
- await loadChapters();
+async function saveChapter(){
+ const ok=await saveChapterNow();
+ if(ok)message("அத்தியாயம் சேமிக்கப்பட்டது.");
 }
 
-async function unpublishChapter(){
- if(!activeChapter)return;
- if(!await flushChapterSave()){alert("முதலில் சேமிக்கவும்.");return}
- const {data,error}=await db.from("ss_chapters").update({
-  is_published:false,updated_at:new Date().toISOString()
- }).eq("id",activeChapter.id).select().single();
- if(error){alert(error.message);return}
- activeChapter=data;
- status("saveStatus","அத்தியாயம் Draft ஆக மாற்றப்பட்டது");
+async function toggleChapterPublish(){
+ if(!currentChapter){
+  if(!await saveChapterNow())return;
+ }
+ if(dirty&&!await saveChapterNow())return;
+ const next=!chapterPublished;
+ const {error}=await db.from("ss_chapters").update({
+  is_published:next,updated_at:new Date().toISOString()
+ }).eq("id",currentChapter);
+ if(error){message("வெளியீட்டு பிழை: "+error.message);return;}
+ chapterPublished=next;
  await loadChapters();
+ message(next?"அத்தியாயம் வெளியிடப்பட்டது.":"Draft ஆக மாற்றப்பட்டது.");
 }
 
 async function deleteChapter(){
- if(!activeChapter||!confirm("இந்த அத்தியாயத்தை நீக்க வேண்டுமா?"))return;
- clearTimeout(saveTimer);
- if(!await flushChapterSave()){alert("முதலில் சேமிக்கவும்.");return}
- const id=activeChapter.id;
- const {error}=await db.from("ss_chapters").delete().eq("id",id);
- if(error){alert("நீக்க முடியவில்லை: "+error.message);return}
- activeChapter=null;
- $("chapterEditor").classList.add("hidden");
- $("emptyEditor").classList.remove("hidden");
- await loadChapters();
+ if(!currentChapter||!confirm("இந்த அத்தியாயத்தை நீக்க வேண்டுமா?"))return;
+ const {error}=await db.from("ss_chapters").delete().eq("id",currentChapter);
+ if(error){message("நீக்க முடியவில்லை: "+error.message);return;}
+ currentChapter=null;dirty=false;
+ $("writerPanel").classList.add("hidden");
+ await loadChapters();message("அத்தியாயம் நீக்கப்பட்டது.");
 }
- 
-$("chapterImage").addEventListener("change",async e=>{
- const file=e.target.files[0];
- if(!file)return;
+
+$("chapterImage").addEventListener("change",async function(){
+ const file=this.files[0];if(!file)return;
  try{
-  status("saveStatus","படம் பதிவேற்றப்படுகிறது...");
+  message("படம் பதிவேற்றப்படுகிறது...");
   const url=await uploadImage(file);
   $("editor").focus();
   document.execCommand("insertImage",false,url);
-  markDirty();
-  status("saveStatus","படம் சேர்க்கப்பட்டது. சேமிக்கப்படும்...");
- }catch(err){status("saveStatus","படப் பிழை: "+err.message)}
- e.target.value="";
+  markDirty();updateCount();
+  message("படம் சேர்க்கப்பட்டது.");
+ }catch(e){message("படப் பிழை: "+e.message);}
+ this.value="";
 });
+
+function toggleFullscreen(){
+ const editor=$("editor");
+ if(!document.fullscreenElement){
+  if(editor.requestFullscreen)editor.requestFullscreen();
+ }else{
+  document.exitFullscreen();
+ }
+}
+
+$("email").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+$("password").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+
+window.addEventListener("beforeunload",e=>{
+ if(dirty){e.preventDefault();e.returnValue="";}
+});
+
+(async()=>{
+ const {data}=await db.auth.getSession();
+ if(data.session)await checkAdmin(data.session.user);
+})();
 </script>
 </body>
-  </html>
+   </html>
