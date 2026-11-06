@@ -2,110 +2,238 @@
 <html lang="ta">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HEART BEAT | கதைகளின் உலகம்</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#100f1b;color:white;font-family:Arial,sans-serif}
-header{background:#1b1929;padding:22px 15px;text-align:center;border-bottom:1px solid #c49a45}
-.logo{color:#f0c66e;font-size:28px;font-weight:bold;letter-spacing:2px}
-header p{color:#ddd;margin-bottom:0}
-.container{max-width:900px;margin:auto;padding:20px}
-.hero{text-align:center;padding:55px 15px;background:linear-gradient(140deg,#28213c,#171525);border:1px solid #51416c;border-radius:15px}
-.hero h1{color:#f0c66e;font-size:32px}
-.hero p{color:#e2dce9;line-height:1.9}
-.section-title{color:#f0c66e;margin-top:35px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.card{background:#211e30;border:1px solid #51416c;border-radius:12px;padding:22px;text-align:center}
-.emoji{font-size:35px}
-.card h3{color:#f0c66e}
-.card p{color:#ddd;line-height:1.8}
-.story-box{background:#211e30;border:1px dashed #8d7548;border-radius:12px;padding:30px 15px;text-align:center;color:#ddd;line-height:1.9}
-.join{margin-top:35px;padding:30px 18px;text-align:center;background:#211e30;border-radius:12px}
-.join h2{color:#f0c66e}
-footer{margin-top:35px;padding:25px;background:#1b1929;text-align:center;color:#bbb;line-height:2}
+body{margin:0;background:#100f1b;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px;background:#1b1929;border-bottom:1px solid #c49a45}
+header h1{color:#f0c66e;margin:0}
+header p{color:#ddd}
+main{max-width:600px;margin:auto;padding:16px}
+.card{background:#211e30;border:1px solid #75613c;border-radius:14px;padding:20px;margin:18px 0}
+h2,h3{color:#f0c66e;text-align:center}
+input,select,button{width:100%;padding:13px;margin:8px 0;border-radius:8px;font-size:16px}
+input,select{background:#100f1b;color:white;border:1px solid #75613c}
+button{background:#c49a45;color:#160f08;border:0;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.5}
+.secondary{background:#39334d;color:white;border:1px solid #75613c}
+#account{display:none}
+#message{text-align:center;color:#f0c66e;line-height:1.8;white-space:pre-wrap}
+footer{text-align:center;color:#aaa;padding:25px}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo">♥ HEART BEAT ♥</div>
+<h1>♥ HEART BEAT ♥</h1>
 <p>கதைகளின் உலகம்</p>
 </header>
 
-<main class="container">
+<main>
 
-<section class="hero">
-<h1>இதயங்களைத் தொடும் கதைகள்!</h1>
-<p>
-கற்பனைகளுக்கு எல்லையில்லை...<br>
-கதைகளுக்கு முடிவில்லை...<br>
-ஒவ்வொரு இதயத்திற்குள்ளும் ஒரு கதை இருக்கிறது.
-</p>
-</section>
-
-<h2 class="section-title">♥ எங்கள் உலகம்</h2>
-
-<section class="cards">
+<section id="auth">
 
 <div class="card">
-<div class="emoji">✍️</div>
-<h3>எழுத்தாளர்கள்</h3>
-<p>உங்கள் கதைகளை நீங்களே பதிவேற்றும் வசதி விரைவில்.</p>
+<h2>♥ புதிய கணக்கு உருவாக்கு</h2>
+
+<input id="name" placeholder="உங்கள் பெய">
+
+<input id="signupEmail" type="email" placeholder="Email முகவரி">
+
+<input id="signupPassword" type="password" placeholder="கடவுச்சொல் (குறைந்தது 6 எழுத்துகள்)">
+
+<select id="role">
+<option value="reader">📖 வாசகர்</option>
+<option value="author">✍️ எழுத்தாளர்</option>
+</select>
+
+<button id="signupBtn" onclick="signup()">பதிவு செய்</button>
 </div>
 
 <div class="card">
-<div class="emoji">📖</div>
-<h3>வாசகர்கள்</h3>
-<p>புதிய கதைகளை வாசித்து மகிழுங்கள்.</p>
-</div>
+<h2>♥ Login</h2>
 
-<div class="card">
-<div class="emoji">🎧</div>
-<h3>ஆடியோ கதைகள்</h3>
-<p>உங்களுக்குப் பிடித்த கதைகளைக் கேட்டு மகிழுங்கள்.</p>
-</div>
+<input id="loginEmail" type="email" placeholder="Email முகவரி">
 
-<div class="card">
-<div class="emoji">🎬</div>
-<h3>வீடியோ கதைகள்</h3>
-<p>கதைகளைப் புதிய வடிவில் அனுபவியுங்கள்.</p>
-</div>
+<input id="loginPassword" type="password" placeholder="கடவுச்சொல்">
 
-<div class="card">
-<div class="emoji">💬</div>
-<h3>கருத்துகள்</h3>
-<p>உங்கள் எண்ணங்களைப் பகிரும் வசதி விரைவில்.</p>
-</div>
-
-<div class="card">
-<div class="emoji">🌟</div>
-<h3>புதிய உலகம்</h3>
-<p>புதிய கதைகளையும் எழுத்தாளர்களையும் கண்டறியுங்கள்.</p>
+<button id="loginBtn" onclick="login()">Login செய்</button>
 </div>
 
 </section>
 
-<h2 class="section-title">📚 கதைகள்</h2>
-
-<section class="story-box">
-<div class="emoji">💗</div>
-<h3>கதைகள் விரைவில் சேர்க்கப்படும்!</h3>
-<p>புதிய எழுத்தாளர்களின் புதிய கதைகளை இங்கே சந்திக்கலாம்.</p>
+<section id="account" class="card">
+<h2>♥ வரவேற்கிறோம்!</h2>
+<h3 id="userName"></h3>
+<p id="userRole" style="text-align:center"></p>
+<p id="accountInfo" style="text-align:center"></p>
+<button class="secondary" onclick="logout()">Logout</button>
 </section>
 
-<section class="join">
-<h2>♥ உங்கள் பயணம் இங்கே தொடங்கட்டும்</h2>
-<p>எழுதுங்கள்... வாசியுங்கள்... உங்கள் கதைகளால் இதயங்களைத் தொடுங்கள்!</p>
-</section>
+<p id="message"></p>
 
 </main>
 
 <footer>
-<strong>♥ HEART BEAT ♥</strong><br>
+♥ HEART BEAT ♥<br>
 கதைகளின் உலகம்<br>
-© 2026 HEART BEAT. All Rights Reserved.
+© 2026 HEART BEAT
 </footer>
 
+<script>
+const SUPABASE_URL =
+"https://wuwjemfaaadqpprwqosx.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_VhC6ZD3rFKRcG_TxKvCa_Q_OJwfvznw";
+
+const db = window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+function msg(text){
+ document.getElementById("message").textContent=text;
+}
+
+async function signup(){
+ const name=document.getElementById("name").value.trim();
+ const email=document.getElementById("signupEmail").value.trim();
+ const password=document.getElementById("signupPassword").value;
+ const role=document.getElementById("role").value;
+ const btn=document.getElementById("signupBtn");
+
+ if(!name || !email || !password){
+  msg("அனைத்து விவரங்களையும் நிரப்பவும்.");
+  return;
+ }
+
+ if(password.length<6){
+  msg("கடவுச்சொல் குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.");
+  return;
+ }
+
+ btn.disabled=true;
+ msg("கணக்கு உருவாக்கப்படுகிறது...");
+
+ try{
+  const {data,error}=await db.auth.signUp({
+   email:email,
+   password:password,
+   options:{
+    data:{
+     display_name:name,
+     account_type:role
+    }
+   }
+  });
+
+  if(error) throw error;
+
+  if(data.session){
+   await showAccount(data.user);
+   msg("கணக்கு வெற்றிகரமாக உருவாக்கப்பட்டது!");
+  }else{
+   msg("பதிவு வெற்றிகரமாக முடிந்தது. உங்கள் Email-க்கு வரும் உறுதிப்படுத்தல் இணைப்பைத் திறந்து பிறகு Login செய்யவும்.");
+  }
+
+ }catch(error){
+  msg("பதிவு செய்ய முடியவில்லை: "+error.message);
+ }finally{
+  btn.disabled=false;
+ }
+}
+
+async function login(){
+ const email=document.getElementById("loginEmail").value.trim();
+ const password=document.getElementById("loginPassword").value;
+ const btn=document.getElementById("loginBtn");
+
+ if(!email || !password){
+  msg("Email மற்றும் கடவுச்சொல்லை நிரப்பவும்.");
+  return;
+ }
+
+ btn.disabled=true;
+ msg("Login செய்கிறது...");
+
+ try{
+  const {data,error}=await db.auth.signInWithPassword({
+   email:email,
+   password:password
+  });
+
+  if(error) throw error;
+
+  await showAccount(data.user);
+  msg("வெற்றிகரமாக Login செய்துவிட்டீர்கள்!");
+
+ }catch(error){
+  msg("Login செய்ய முடியவில்லை: "+error.message);
+ }finally{
+  btn.disabled=false;
+ }
+}
+
+async function showAccount(user){
+ const {data,error}=await db
+  .from("hb_profiles")
+  .select("display_name,account_type")
+  .eq("id",user.id)
+  .maybeSingle();
+
+ if(error){
+  msg("கணக்கு விவரங்களைப் பெற முடியவில்லை: "+error.message);
+  return;
+ }
+
+ if(!data){
+  msg("கணக்கு விவரம் இன்னும் உருவாகவில்லை. மீண்டும் முயற்சி செய்யவும்.");
+  return;
+ }
+
+ document.getElementById("auth").style.display="none";
+ document.getElementById("account").style.display="block";
+
+ document.getElementById("userName").textContent=data.display_name;
+
+ document.getElementById("userRole").textContent=
+ data.account_type==="author" ? "✍️ எழுத்தாளர் கணக்கு" : "📖 வாசகர் கணக்கு";
+
+ document.getElementById("accountInfo").textContent=
+ "உங்கள் HEART BEAT கணக்கு செயல்பாட்டில் உள்ளது.";
+}
+
+async function logout(){
+ const {error}=await db.auth.signOut();
+
+ if(error){
+  msg("Logout செய்ய முடியவில்லை: "+error.message);
+  return;
+ }
+
+ document.getElementById("account").style.display="none";
+ document.getElementById("auth").style.display="block";
+ msg("நீங்கள் Logout செய்துவிட்டீர்கள்.");
+}
+
+async function checkSession(){
+ const {data,error}=await db.auth.getSession();
+
+ if(error){
+  msg("Session சரிபார்க்க முடியவில்லை.");
+  return;
+ }
+
+ if(data.session){
+  await showAccount(data.session.user);
+ }
+}
+
+checkSession();
+</script>
+
 </body>
- </html>
+</html>
